@@ -1,36 +1,40 @@
 <?php
+require "Habitat.php";
+class House extends Habitat {
 
-class House {
-    // Ici on déclare un attribut avec une visibilité publique et un type int
-    public $size = 100;
-    protected $color = "blue";
-
+    // Ici on déclare un attribut avec une visibilité publique et un type int   
+    protected static $taxe = 3;
     //Méthode appelée automatiquement à l'instanciation de l'objet
     //Les paramètres sont ceux passés à l'instance de l'objet
     
     public function __construct($size, $color)
     {
-        //On stocke les valeurs dans les attributs correspondants
-        $this->size = $size;
-        $this->setColor($color);
+        parent::__construct($size, $color);
     }
 
-    public function getColor() {
-        return $this->color;
-    }
-    // Setter qui me permet de protéger la propriété color et d'effectuer des vérifs
-    public function setColor($color) {
-        if(in_array($color, ["green", "blue", "white"])) {
-            $this->color = $color;
-        }
-        else {
-            throw new Exception("Warning unknown color");
-        }
-    }
+   
     
     public function welcome() {
         echo "<p>Bienvenue dans votre maison </p>" ;
     }
+
+    public static function describe():string {
+        return "This class represents a house with a size and a color. 
+        Authorized colors are : ". implode(", ", self::COLORS);
+    }
+    public static function setTaxe(int $taxe) {
+        self::$taxe = $taxe;
+    }
+    public static function setInstanceTaxe(int $taxe) {
+        self::$taxe = $taxe;
+    }
+    public static function getTaxe() {
+        return self::$taxe;
+    }
+    public function getInstanceTaxe() {
+        return self::$taxe;
+    }
+    
 }
 
 ?>
